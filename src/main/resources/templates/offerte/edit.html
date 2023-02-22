@@ -10,7 +10,7 @@
  style="position:absolute; left: 50%;bottom: 5%; text-decoration: none; transform: translate(-50%,-50%);">Home</a>
 	<div class="containerForm">
 		<h1 class="text-center pb-3 text-uppercase">
-		Crea una nuova offerta
+		Modifica offerta
 		</h1>
 		<div class="d-flex flex-column align-items-center justify-content-center">
 				<form  
@@ -44,11 +44,12 @@
 				   <li th:each="err : ${#fields.errors('endDate')}" th:text="${err}"></li>
 				</ul>
 	  		</div>
-  		<input type="hidden" th:field="${offerta.pizza}">-->
-<!--	  		<label class="form-label" for="endDate">Pizza associata</label>-->
-<!--	  		<select name="pizza_id">-->
-<!--				  <option th:each="pizza : ${pizze}" name="offerta.pizza" th:value="${pizza}" th:text="${pizza.getNome()}"></option>-->
-<!--			  </select>-->
+<!--  		<input type="hidden" th:field="${offerta.pizza}">-->
+	  		<label class="form-label" for="endDate">Pizza associata</label>
+	  		<select name="pizza">
+				  <option th:each="pizza : ${pizze}" th:value="${pizza.getId()}" th:text="${pizza.getNome()}"
+				   th:selected="${pizza.getId()==offerta.pizza.getId()}"></option>
+			  </select>
 			<div class="d-flex justify-content-between">
 				<button type="submit" class="btn btn-primary">Salva</button>
 				<a th:href="@{/pizze/{id}(id=${offerta.pizza.getId()})}" class="btn btn-danger">Annulla</a>
