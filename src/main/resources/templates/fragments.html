@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+<th:block th:fragment="head">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/5.2.3/css/bootstrap.min.css}"/>
+	<link th:rel="stylesheet" th:href="@{/webjars/font-awesome/5.15.4/css/all.css} "/>
+</th:block>
+<thead th:fragment="table_head">
+	<tr class="text-uppercase">
+	    <th scope="col">id</th>
+	    <th scope="col">nome</th>
+	    <th scope="col" style="width: 10%; text-align: center;">dettagli</th>
+	    <th scope="col" style="width: 10%; text-align: center;">elimina</th>
+	</tr>
+</thead>
+
+<tbody th:fragment="table_body_pizza(elenco)">
+	    <tr th:each="elemento : ${elenco}" class="text-capitalize">
+	      	<td th:text="${elemento.getId()}"></td>
+	      	<td th:text="${elemento.getNome()}"></td>
+	      	<td class="d-flex justify-content-center"><a class="btn btn-outline-warning" th:href="@{'pizze/'+ ${elemento.getId()}}"><i class="fas fa-info-circle"></i></a></td>
+	    	<td >
+				<form  th:action="@{/pizze/deletePizza/{id}(id=${elemento.getId()})}" method="post" class="d-flex justify-content-center">
+					<button class="btn btn-outline-danger" type="submit" id="submitButton">
+					  <i class="fas fa-trash-alt"></i>
+					</button>
+				</form>
+			</td>
+	    </tr>
+</tbody>
+<div th:fragment="script">
+	<script th:src="@{/webjars/bootstrap/5.2.3/js/bootstrap.bundle.min.js}"></script>
+</div>
+
+</body>
+</html>

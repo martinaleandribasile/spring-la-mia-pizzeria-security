@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<div th:replace="~{fragments :: head}"></div>
+<title>Pizza</title>
+</head>
+<body>
+	<img style="width: 100%; height: 100vh;" th:src="@{/img/farina.jpg}">
+	<a th:href="@{/}" class="btn btn-success"
+ style="position:absolute; left: 50%;bottom: 5%; text-decoration: none; transform: translate(-50%,-50%);">Home</a>
+	<div class="containerForm">
+		<h1 class="text-center pb-3 text-uppercase">
+		Crea una nuova offerta
+		</h1>
+		<div class="d-flex flex-column align-items-center justify-content-center">
+				<form  
+			th:object="${offerta}"
+			th:action="@{/offerte/edit/{id}(id=${offerta.getId()})}" 
+			method="post"
+			>
+			
+			
+			<label class="form-label" for="title">Titolo</label>
+			<input class="form-control" id="title" th:field="*{title}" type="text" th:errorClass="is-invalid">
+			<div th:if="${#fields.hasErrors('title')}" class="invalid-feedback">
+				<ul>
+				   <li th:each="err : ${#fields.errors('title')}" th:text="${err}"></li>
+				</ul>
+	  		</div>
+	  		
+			<label class="form-label" for="startingDate">Data inizio offerta</label>
+			<input class="form-control" id="startingDate" name="startingDate" th:value="*{startingDate}" type="date"  th:errorClass="is-invalid">
+			<div th:if="${#fields.hasErrors('startingDate')}" class="invalid-feedback">
+				<ul>
+				   <li th:each="err : ${#fields.errors('startingDate')}" th:text="${err}"></li>
+				</ul>
+	  		</div>
+	
+	
+			<label class="form-label" for="endDate">Data fine offerta</label>
+			<input class="form-control" id="endDate" name="endDate" th:value="*{endDate}" type="date" th:errorClass="is-invalid">
+			<div th:if="${#fields.hasErrors('endDate')}" class="invalid-feedback">
+				<ul>
+				   <li th:each="err : ${#fields.errors('endDate')}" th:text="${err}"></li>
+				</ul>
+	  		</div>
+  		<input type="hidden" th:field="${offerta.pizza}">-->
+<!--	  		<label class="form-label" for="endDate">Pizza associata</label>-->
+<!--	  		<select name="pizza_id">-->
+<!--				  <option th:each="pizza : ${pizze}" name="offerta.pizza" th:value="${pizza}" th:text="${pizza.getNome()}"></option>-->
+<!--			  </select>-->
+			<div class="d-flex justify-content-between">
+				<button type="submit" class="btn btn-primary">Salva</button>
+				<a th:href="@{/pizze/{id}(id=${offerta.pizza.getId()})}" class="btn btn-danger">Annulla</a>
+			</div>
+		
+		</form>
+		 </div>
+	</div>
+<div th:replace="~{fragments :: script}"></div>
+</body>
+</html>
+<style>
+	input{
+		margin-bottom: 15px;
+	}
+	.containerForm{
+		padding: 30px;
+		border-radius: 15px;
+		background-color: wheat;
+		display: flex;
+		flex-direction: column;
+	    position: absolute;
+	    top: 50%;
+	    width: 55%;
+	    transform: translate(50%,-50%);
+	    right: 50%;
+	    justify-content: center;
+	}
+</style>

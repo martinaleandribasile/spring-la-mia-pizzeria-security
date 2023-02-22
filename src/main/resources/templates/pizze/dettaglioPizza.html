@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<div th:replace="~{fragments :: head}"></div>
+<title>Pizza</title>
+</head>
+<body>
+<img style="width: 100%; height: 100vh;" th:src="@{/img/pizzadett.jpg}">
+<a th:href="@{/}" class="btn btn-success"
+ style="position:absolute; left: 50%;bottom: 5%; text-decoration: none; transform: translate(-50%,-50%);">Lista Pizze</a>
+ <a th:if="${pizza.offerte.size()==0}" class="btn btn-primary my-5" th:href="@{|/offerte/create?pizzaId=${pizza.id}|}" 
+ style="position:absolute; left: 50%;bottom: -3%; text-decoration: none; transform: translate(-50%,-50%);">Crea Offerta</a>
+<div class="containerPizzaCard" th:styleappend="${pizza.offerte.size()>0}? 'right:75%; width:35%' : 'right:50%;width:43%'">
+	<div class="card" style="width: 100%;">
+  	<img th:src="${pizza.getFoto()}" class="card-img-top" style="width: 100%;height:500px;">
+  	<div class="card-body">
+    	<h4 class="card-title text-uppercase pb-4" th:text=" ${pizza.getNome()}"></h4>
+    	<h6>Ingredienti:</h6>
+    	<p class="card-text" th:text="${pizza.getDescrizione()}"></p>
+    	<h6>Prezzo:</h6>
+    	<p class="card-text" th:text="${pizza.getPrezzo()} + ' euro'"></p>
+  		<a class="btn btn-warning" th:href="@{editPizza/{id}(id=${pizza.getId()})}" >Modifica</a>
+  	</div>
+ 	</div>
+ 	
+ </div>
+ <div class="containerOfferte"  th:if="${pizza.offerte.size()>0}">
+	 <img th:src="@{/img/offerta-speciale.png}" style="overflow: hidden;">
+	<div class="card" style="width: 100%;">
+  	<div class="card-body ">
+		<div th:each="offerta : ${pizza.offerte}" class="mt-2"> 
+	    	<h4 class="card-title text-uppercase " th:text=" ${offerta.getTitle()}"></h4>
+	    	<h6 class="text-success">Data Inizio:</h6>
+	    	<p class="card-text " th:text="${offerta.getStartingDate()}"></p>
+	    	<h6 class="text-danger">Data Fine:</h6>
+	    	<p class="card-text " th:text="${offerta.getEndDate()}"></p>
+	    	<a class="btn btn-warning" th:href="@{/offerte/edit/{id}(id=${offerta.getId()})}" >Modifica</a>
+  		</div>
+  		<a class="btn btn-success my-5" th:href="@{|/offerte/create?pizzaId=${pizza.id}|}" >Crea Offerta</a>
+  	</div>
+ 	</div>
+ 	
+ </div>
+<div th:replace="~{fragments :: script}"></div>
+</body>
+</html>
+<style>
+	.containerPizzaCard{
+	height: 70%;
+	padding: 20px;
+    border-radius: 15px;
+    background-color: wheat;
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 50%;
+    transform: translate(50%,-50%);
+    align-items: center;
+    justify-content: center;
+	}
+	.containerOfferte{
+	height: 70%;
+	padding: 20px;
+    border-radius: 15px;
+    background-color: wheat;
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 50%;
+    width: 35%;
+    transform: translate(50%,-50%);
+    right: 25%;
+    align-items: center;
+    justify-content: center;
+	}
+</style>

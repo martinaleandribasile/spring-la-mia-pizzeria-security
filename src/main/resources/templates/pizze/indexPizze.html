@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<div th:replace="~{fragments :: head}"></div>
+<title>Pizze</title>
+</head>
+<body>
+	<img style="width: 100%; height: 100vh;" th:src="@{/img/pizza_sfondo.jpg}">
+	<img th:src="@{/img/pizzaLogo.jpg}" class="imgPosition">
+	<form th:if="${ricerca}==false" action="/pizze" style="column-gap: 10px;" class="mainForm">
+		<div >
+			<label class="p-2 text-dark" style="background-color:#27292d; color: white!important; border-radius: 5px;">Ricerca:</label>
+			<input type="text" name="keyword" />
+			<input type="submit" value="Submit" class="btn btn-success" />
+		</div>
+	</form>
+	<form th:if="${ricerca}" action="/pizze" style="column-gap: 10px;" class="mainForm">
+				<div >
+					<input type="text" name="" class="d-none"/>
+					<input type="submit" value="View All" class="btn btn-warning" />
+				</div>
+			</form>
+	<div th:if="${elencoPizze.size()>0}">
+		<div style="position: absolute; top: 60%; width: 100%; transform: translate(0,-50%);">
+		<table class="w-75 table table-dark mx-auto table-striped table-hover mt-5 table-bordered border-warning">
+		 	<thead th:replace="~{fragments :: table_head}"></thead>
+		  	<tbody th:replace="~{fragments :: table_body_pizza(${elencoPizze})}"></tbody>
+	  	</table>
+	  <div class="d-flex flex-column align-items-center justify-content-center gap-2">
+		  <a class="btn btn-success" th:href="@{'/pizze/newPizza'}" style="width: 10%;">Inserisci Nuova Pizza</a></div>
+		</div>
+	</div>
+	<div th:if="${elencoPizze.size()==0}">
+		<h1 style="background-color: wheat;width: 80%;border-radius: 25px;" class="text-danger text-center p-2 mx-auto">Non ci sono pizze da visualizzare</h1>
+	</div>
+	
+<div th:replace="~{fragments :: script}"></div>
+</body>
+</html>
+<style>
+	.mainForm{
+	display: flex;
+    position: absolute;
+    top: 25%;
+    width: 100%;
+    transform: translate(50%);
+    right: 50%;
+    justify-content: center;
+	}
+	.imgPosition{
+	width: 250px;
+    position: absolute;
+    top: 5%;
+    transform: translate(50%);
+    right: 50%;
+	}
+</style>
