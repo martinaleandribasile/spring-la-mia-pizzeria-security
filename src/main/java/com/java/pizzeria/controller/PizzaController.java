@@ -1,5 +1,6 @@
 package com.java.pizzeria.controller;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -14,7 +15,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.java.pizzeria.model.Ingredienti;
 import com.java.pizzeria.model.Pizza;
+import com.java.pizzeria.repository.IngredientiRepository;
+import com.java.pizzeria.repository.OffertaRepository;
 import com.java.pizzeria.repository.PizzaRepository;
 
 import jakarta.validation.Valid;
@@ -26,6 +30,10 @@ import jakarta.validation.Valid;
 public class PizzaController {
 	@Autowired
 	PizzaRepository pizzaRepository;
+	@Autowired
+	OffertaRepository offertaRepository;
+	@Autowired 
+	IngredientiRepository ingredientiRepository;
 	
 	@GetMapping
 	public String index(@RequestParam(name="keyword", required= false) String keyword,  Model model) {
@@ -50,15 +58,20 @@ public class PizzaController {
 	public String dettailsPizza(@PathVariable("id") Integer id, Model model) {
 		Optional<Pizza> p= pizzaRepository.findById(id);
 		if(p.isEmpty()) {
-			
+			return "redirect:/error";
 		}
+		model.addAttribute("today", LocalDate.now());
 		model.addAttribute("pizza",p.get());
 		return "pizze/dettaglioPizza";
 	}
+	
+	
 	@GetMapping("/newPizza")
 	public String create(Model model) {
 		Pizza pizza=new Pizza();
+		List<Ingredienti> ingredienti= ingredientiRepository.findAll();
 		model.addAttribute("pizza", pizza);
+		model.addAttribute("ingredienti",ingredienti);
 		return "pizze/newPizza";
 	}
 	
@@ -76,8 +89,10 @@ public class PizzaController {
 	public String edit(@PathVariable("id") Integer id, Model model) {
 		Optional<Pizza> p= pizzaRepository.findById(id);
 		if(p.isEmpty()) {
-			
+			return "redirect:/error";
 		}
+		List<Ingredienti> ingredienti= ingredientiRepository.findAll();
+		model.addAttribute("ingredienti",ingredienti);
 		model.addAttribute("pizza",p.get());
 		return "pizze/editPizza";
 	}

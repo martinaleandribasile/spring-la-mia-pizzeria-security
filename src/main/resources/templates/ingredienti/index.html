@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<div th:replace="~{fragments :: head}"></div>
+<title>Ingredienti</title>
+</head>
+<body>
+	
+	<img style="width: 100%; height: 100vh;" th:src="@{/img/pizza_sfondo.jpg}">
+	<ol class="ingredientiBox">
+		<h1 class="text-center">INGREDIENTI</h1>
+		<li th:each="ingrediente : ${ingredienti}" >
+			<p th:text="${ingrediente.getName()}"></p>
+			<div class="d-flex gap-3">
+				<div class="d-flex justify-content-center"><a th:href="@{/ingredienti/edit/{id} (id=${ingrediente.getId()})}" class="btn btn-outline-primary" ><i class="bi bi-pencil-square"></i></a></div>
+		    	<div >
+					<form th:action="@{/ingredienti/delete/{id}(id=${ingrediente.getId()})}"  method="post" class="d-flex justify-content-center">
+						<button class="btn btn-outline-danger" type="submit" id="submitButton">
+						  <i class="fas fa-trash-alt"></i>
+						</button>
+					</form>
+				</div>
+			</div>
+		</li>
+		<div class="d-flex justify-content-center w-100">
+			<a th:href="@{/ingredienti/create}" class="btn btn-primary m-4">Crea un nuovo Ingrediente</a>
+		</div>
+	</ol>
+	<a th:href="@{/}" class="btn btn-success"
+ style="position:absolute; left: 5%;top: 1%; text-decoration: none;">Lista Pizze</a>
+<div th:replace="~{fragments :: script}"></div>
+</body>
+</html>
+
+<style>
+	.ingredientiBox{
+	padding: 30px;
+	background-color:#eadbc4;
+	border-radius: 20px;
+	display: flex;
+	flex-direction: column;
+    position: absolute;
+    top: 50%;
+    width: 50%;
+    transform: translate(50%, -50%);
+    right: 50%;
+    align-items: start;
+    justify-content: center;
+	}
+	li{
+		text-transform: uppercase;
+		width: 100%;
+		padding: 5px;
+		border: 2px solid indianred;
+		display: flex;
+		justify-content: space-between;
+	}
+</style>

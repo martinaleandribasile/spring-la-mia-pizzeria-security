@@ -5,12 +5,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("/")
-public class MainController {
-	
-	@GetMapping
-	public String homePage() { //reindirizzo la mia homepage all url /pizze
-		return "redirect:/pizze";
+@RequestMapping("/error")
+public class ErrorController {
+
+	@GetMapping()
+	public String error() {
+		return "error";
 	}
-	
 }

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<div th:replace="~{fragments :: head}"></div>
+<title>Pizza</title>
+</head>
+<body>
+	<img style="width: 100%; height: 100vh;" th:src="@{/img/farina.jpg}">
+	<a th:href="@{/}" class="btn btn-success"
+ style="position:absolute; left: 50%;bottom: 5%; text-decoration: none; transform: translate(-50%,-50%);">Home</a>
+	<div class="containerForm">
+		<h1 class="text-center pb-3 text-uppercase">
+		Modifica Ingrediente
+		</h1>
+		<div class="d-flex flex-column align-items-center justify-content-center">
+				<form  
+			th:action="@{/ingredienti/edit/{id}(id=${ing.id})}" 
+			method="post"
+			th:object="${ing}">
+			
+			<label class="form-label" for="title">Nome</label>
+			<input class="form-control" id="name" th:field="*{name}" type="text" th:errorClass="is-invalid">
+			<div th:if="${#fields.hasErrors('name')}" class="invalid-feedback">
+				<ul>
+				   <li th:each="err : ${#fields.errors('name')}" th:text="${err}"></li>
+				</ul>
+	  		</div>
+			<button type="submit" class="btn btn-primary">Salva</button>
+		
+		
+		</form>
+		 </div>
+	</div>
+<div th:replace="~{fragments :: script}"></div>
+</body>
+</html>
+<style>
+	input{
+		margin-bottom: 15px;
+	}
+	.containerForm{
+		padding: 30px;
+		border-radius: 15px;
+		background-color: wheat;
+		display: flex;
+		flex-direction: column;
+	    position: absolute;
+	    top: 50%;
+	    width: 55%;
+	    transform: translate(50%,-50%);
+	    right: 50%;
+	    justify-content: center;
+	}
+</style>

@@ -68,7 +68,7 @@ public class OffertaController {
 	public String edit(@PathVariable("id") Integer id, Model model) {
 		Optional<Offerta> off= offertaRepository.findById(id);
 		if(off.isEmpty()) {
-			
+			return "redirect:/error";
 		}
 		List<Pizza> elencoPizze;
 		elencoPizze= pizzaRepository.findAll();
@@ -84,5 +84,11 @@ public class OffertaController {
 		offertaRepository.save(formOfferta);
 		return "redirect:/pizze/"+ formOfferta.getPizza().getId();
 	}
-	
+	@PostMapping("/deleteOfferta/{id}")
+	public String delete(@PathVariable("id") Integer id) {
+		Optional<Offerta> offerta= offertaRepository.findById(id);
+		Pizza pizza=offerta.get().getPizza();
+		offertaRepository.deleteById(id);
+		return "redirect:/pizze/" + pizza.getId();
+	}
 }
