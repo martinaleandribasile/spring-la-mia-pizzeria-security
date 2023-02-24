@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.java.pizzeria.model.Ingredienti;
-import com.java.pizzeria.model.Pizza;
 import com.java.pizzeria.repository.IngredientiRepository;
 import com.java.pizzeria.repository.PizzaRepository;
 
