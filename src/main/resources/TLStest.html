@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<title>TLS TEST - OK</title>
+</head>
+
+<body>
+
+	<div sec:authorize="isAuthenticated()">
+		TEST: USER AUTENTICATO!!
+	</div>
+	<div sec:authorize="hasAuthority('ADMIN')">
+		TEST: ADMIN AUTENTICATO!!!
+	</div>
+	<div sec:authorize="hasAuthority('USER')">
+		TEST: SOLO USER (non autenticato?)
+	</div>
+	
+	User autenticato: <span sec:authentication="name">xxx</span>
+	Privilegi autenticazione: <span sec:authentication="principal.authorities">yyy</span>
+	
+</body>
+
+</html>
